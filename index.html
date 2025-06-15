@@ -72,7 +72,30 @@
     </div>
   </section>
 
- 
+  <!-- Contact -->
+  <section id="contact" class="py-20 px-4 bg-white text-gray-900">
+  <div class="max-w-xl mx-auto">
+    <h2 class="text-3xl font-bold mb-6 text-center">Contact Us</h2>
+
+    <form id="contact-form" action="https://formspree.io/f/xblyyaed" method="POST" class="bg-white p-6 rounded-lg shadow-md">
+      <div class="mb-4">
+        <label for="name" class="block text-gray-700">Name</label>
+        <input type="text" id="name" name="name" required class="w-full p-2 border rounded">
+      </div>
+      <div class="mb-4">
+        <label for="EMAIL" class="block text-gray-700">Email</label>
+        <input type="EMAIL" id="EMAIL" name="_replyto" required class="w-full p-2 border rounded">
+      </div>
+      <div class="mb-4">
+        <label for="message" class="block text-gray-700">Message</label>
+        <textarea id="message" name="message" rows="4" required class="w-full p-2 border rounded"></textarea>
+      </div>
+      <button type="submit" class="bg-yellow-400 text-teal-900 px-6 py-3 rounded-full hover:bg-yellow-500 transition">Submit</button>
+    </form>
+
+    <p id="form-message" class="text-center text-green-600 mt-4 hidden"></p>
+  </div>
+  </section>
 
   <!-- Footer -->
   <footer class="bg-teal-600 text-white py-6">
