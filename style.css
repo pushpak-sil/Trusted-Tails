@@ -1,15 +1,20 @@
 body {
   margin: 0;
-  font-family: Times New Roman, sans-serif;
+  font-family: 'Open Sans', sans-serif;
   background-color: #111;
   color: #fff;
   overflow-x: hidden;
+  line-height: 1.6;
 }
 
+/* Header styling */
 header {
   text-align: center;
   font-size: 3rem;
   padding: 100px 20px 20px;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  color: #0f766e; /* Tailwind Teal-700 */
 }
 
 /* Fade-in Animation */
@@ -36,4 +41,12 @@ header {
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+/* Optional Quote or Accent Font */
+.quote,
+.italic {
+  font-family: 'Merriweather', serif;
+  font-style: italic;
+  color: #0d9488; /* Tailwind Teal-600 */
 }
