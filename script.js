@@ -1,17 +1,21 @@
-
+// Initialize GSAP animations with ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
-
-gsap.utils.toArray(".slide-up").forEach(section => {
-  gsap.from(section, {
-    y: 100,
-    opacity: 0,
-    duration: 1,
-    ease: "power3.out",
-    scrollTrigger: {
-      trigger: section,
-      start: "top 80%",
-      toggleActions: "play none none none"
+// Animate elements with the "slide-up" class
+gsap.utils.toArray(".slide-up").forEach(el => {
+  gsap.fromTo(el,
+    { y: 100, opacity: 0 },
+    {
+      y: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: "power3.out",
+      scrollTrigger: {
+        trigger: el,
+        start: "top 85%",
+        toggleActions: "play reverse play reverse", // animate on scroll in and out
+        markers: false // set to true if you want to debug
+      }
     }
-  });
+  );
 });
