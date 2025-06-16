@@ -1,4 +1,3 @@
-
 // Initialize GSAP animations with ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,9 +13,9 @@ gsap.utils.toArray(".slide-up").forEach(el => {
       scrollTrigger: {
         trigger: el,
         start: "top 85%",
-        scrub: true, 
+        toggleActions: "play reverse play reverse",
         once: false,
-        markers: false // set to true if you want to debug
+        markers: true
       }
     }
   );
