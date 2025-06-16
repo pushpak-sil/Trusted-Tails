@@ -1,19 +1,22 @@
-// Initialize GSAP animations with ScrollTrigger
+// Initialize GSAP plugins
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// Animate elements with the "slide-up" class
+// Initialize Lenis for smooth scrolling
 const lenis = new Lenis({
   duration: 1.2,
-  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // smooth easing
+  easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
   smooth: true
 });
 
+// Animation frame loop + sync ScrollTrigger
 function raf(time) {
   lenis.raf(time);
+  ScrollTrigger.update(); // Ensure GSAP animations stay in sync
   requestAnimationFrame(raf);
 }
-
 requestAnimationFrame(raf);
+
+// Animate elements with the "service-card" class
 gsap.utils.toArray(".service-card").forEach((card, i) => {
   gsap.fromTo(card,
     { y: 50, opacity: 0 },
@@ -25,9 +28,7 @@ gsap.utils.toArray(".service-card").forEach((card, i) => {
       scrollTrigger: {
         trigger: card,
         start: "top 90%",
-        toggleActions: "play reverse play reverse",
-        once: false,
-        markers: false
+        toggleActions: "play none none reverse",
       }
     }
   );
