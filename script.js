@@ -15,7 +15,7 @@ gsap.utils.toArray(".slide-up").forEach(el => {
         start: "top 85%",
         toggleActions: "play reverse play reverse",
         once: false,
-        markers: true
+        markers: false
       }
     }
   );
