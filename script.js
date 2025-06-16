@@ -16,6 +16,12 @@ function raf(time) {
 }
 requestAnimationFrame(raf);
 
+document.querySelector("a[href='#contact']").addEventListener("click", (e) => {
+  e.preventDefault();
+  lenis.scrollTo("#contact");
+});
+
+
 // Animate elements with the "service-card" class
 gsap.utils.toArray(".service-card").forEach((card, i) => {
   gsap.fromTo(card,
