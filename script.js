@@ -14,6 +14,7 @@ gsap.utils.toArray(".slide-up").forEach(el => {
         trigger: el,
         start: "top 85%",
         toggleActions: "play reverse play reverse", // animate on scroll in and out
+        once: false,
         markers: false // set to true if you want to debug
       }
     }
