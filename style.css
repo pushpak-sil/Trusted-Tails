@@ -5,12 +5,16 @@ body {
   background-color: #111;
   color: #fff;
   overflow: hidden; /* Let Lenis handle scrolling */
+  scroll-behavior: auto !important; /* disable native smooth scroll */
+  
   line-height: 1.6;
 }
 
 /* Optional: ensure full height for scrolling */
 html, body {
   height: 100%;
+  scroll-behavior: auto !important; /* disable native smooth scroll */
+  overflow: hidden; /* Let Lenis take over scroll */
 }
 
 /* Header styling */
