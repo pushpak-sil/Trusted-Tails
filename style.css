@@ -1,11 +1,16 @@
+/* General body styles */
 body {
   margin: 0;
   font-family: 'Open Sans', sans-serif;
   background-color: #111;
   color: #fff;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: hidden; /* Let Lenis handle scrolling */
   line-height: 1.6;
+}
+
+/* Optional: ensure full height for scrolling */
+html, body {
+  height: 100%;
 }
 
 /* Header styling */
@@ -18,7 +23,7 @@ header {
   color: #0f766e; /* Tailwind Teal-700 */
 }
 
-/* Fade-in Animation */
+/* Fade-in Animation (optional if not using GSAP) */
 .fade-in {
   opacity: 0;
   animation: fadeIn 2s ease-out forwards;
@@ -30,18 +35,10 @@ header {
   }
 }
 
-/* Slide-up Animation */
+/* Removed slide-up CSS animation to prevent conflict with GSAP */
+/* The class remains available for targeting via JS or styling */
 .slide-up {
-  transform: translateY(100px);
-  opacity: 0;
-  animation: slideUp 1.5s ease-out 1s forwards;
-}
-
-@keyframes slideUp {
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
+  /* DO NOT include animation here — GSAP will handle it */
 }
 
 /* Optional Quote or Accent Font */
