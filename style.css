@@ -4,8 +4,8 @@ body {
   font-family: 'Open Sans', sans-serif;
   background-color: #111;
   color: #fff;
-  overflow: hidden; /* Let Lenis handle scrolling */
-  scroll-behavior: auto !important; /* disable native smooth scroll */
+  overflow-x: hidden; /* Let Lenis handle scrolling */
+  scroll-behavior: auto ;
   
   line-height: 1.6;
 }
@@ -13,8 +13,8 @@ body {
 /* Optional: ensure full height for scrolling */
 html, body {
   height: 100%;
-  scroll-behavior: auto !important; /* disable native smooth scroll */
-  overflow: hidden; /* Let Lenis take over scroll */
+  scroll-behavior: auto ;
+  overflow-x: hidden; /* Let Lenis take over scroll */
 }
 
 /* Header styling */
