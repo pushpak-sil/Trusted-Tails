@@ -67,10 +67,12 @@ document.addEventListener('DOMContentLoaded', function() {
                           document.querySelector('[class*="chatbot"]');
     
     if (gradientWidget) {
-      console.log('Gradient AI widget detected, hiding chat button');
-      if (chatButton) chatButton.style.display = 'none';
+      console.log('Gradient AI widget detected, keeping chat button hidden');
+      // Keep button hidden since official widget is working
     } else {
-      console.log('Gradient AI widget not detected, keeping chat button');
+      console.log('Gradient AI widget not detected, showing fallback chat button');
+      // Show the fallback button since official widget didn't load
+      if (chatButton) chatButton.style.display = 'block';
     }
   }, 3000); // Wait 3 seconds for widget to load
   
