@@ -69,7 +69,7 @@ if (backToTopButton) {
   const resolveEndpoint = () => {
     return (
       localStorage.getItem('gradient_endpoint') ||
-      'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run'
+      'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run/chat'
     );
   };
 
