@@ -39,11 +39,8 @@ header {
   }
 }
 
-/* Removed slide-up CSS animation to prevent conflict with GSAP */
-/* The class remains available for targeting via JS or styling */
-.slide-up {
-  /* DO NOT include animation here — GSAP will handle it */
-}
+/* slide-up class used by GSAP only */
+.slide-up {}
 
 /* Optional Quote or Accent Font */
 .quote,
@@ -51,4 +48,19 @@ header {
   font-family: 'Merriweather', serif;
   font-style: italic;
   color: #0d9488; /* Tailwind Teal-600 */
+}
+
+/* Utility: glass card elevation (fallback if Tailwind not applied) */
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.14);
 }
