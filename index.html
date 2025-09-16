@@ -167,25 +167,24 @@
     ↑
   </button>
 
-  <!-- Chatbot Widget -->
-  <button id="chatToggle" aria-label="Open chat" class="fixed right-6 bottom-28 z-[2147483647] bg-yellow-400 text-teal-900 px-4 py-3 rounded-full shadow-lg hover:bg-yellow-500 transition">Chat</button>
+  <!-- Gradient AI Chatbot Widget -->
+  <script async
+    src="https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run/static/chatbot/widget.js"
+    data-agent-id="d48d2994-933a-11f0-b074-4e013e2ddde4"
+    data-chatbot-id="NzJfkngGNM85wJq0dKp3X5zw_L2-vfOQ"
+    data-name="Trusted Tails Assistant"
+    data-primary-color="#0f766e"
+    data-secondary-color="#f0fdfa"
+    data-button-background-color="#0f766e"
+    data-starting-message="Hello! How can I help you with your pet and home care needs today?"
+    data-logo="/static/chatbot/icons/default-agent.svg">
+  </script>
 
-  <div id="chatWidget" class="fixed right-6 bottom-32 z-[2147483647] w-80 max-w-[92vw] bg-white rounded-2xl shadow-2xl border border-teal-100 overflow-hidden hidden">
-    <div class="bg-teal-600 text-white px-4 py-3 flex justify-between items-center">
-      <div class="font-semibold">Trusted Tails Assistant</div>
-      <button id="chatClose" class="text-white/90 hover:text-white" aria-label="Close chat">✕</button>
-    </div>
-    <div id="chatMessages" class="h-80 overflow-y-auto p-4 space-y-3 bg-white">
-      <div class="text-sm text-gray-600">How can I help you today?</div>
-    </div>
-    <div class="border-t border-gray-200 p-2 flex items-center gap-2 bg-white">
-      <input id="chatInput" type="text" placeholder="Type your message..." class="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400" />
-      <button id="chatSend" class="bg-teal-600 text-white px-3 py-2 rounded-lg hover:bg-teal-700">Send</button>
-    </div>
-    <div class="px-3 pb-3 text-[11px] text-gray-500">
-      AI Assistant powered by Gradient AI
-    </div>
-  </div>
+  <!-- Fallback Chat Button (visible if widget doesn't load) -->
+  <button id="fallbackChat" 
+    class="fixed right-4 bottom-20 z-50 bg-teal-600 text-white px-4 py-3 rounded-full shadow-lg hover:bg-teal-700 transition">
+    💬 Chat
+  </button>
 
   
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>

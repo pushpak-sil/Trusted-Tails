@@ -56,111 +56,13 @@ if (backToTopButton) {
   });
 }
 
-// Chatbot wiring
-(function initChatbot() {
-  const toggle = document.getElementById('chatToggle');
-  const widget = document.getElementById('chatWidget');
-  const closeBtn = document.getElementById('chatClose');
-  const input = document.getElementById('chatInput');
-  const sendBtn = document.getElementById('chatSend');
-  const messages = document.getElementById('chatMessages');
-  if (!toggle || !widget || !closeBtn || !input || !sendBtn || !messages) return;
-
-  const resolveEndpoint = () => {
-    return (
-      localStorage.getItem('gradient_endpoint') ||
-      'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run'
-    );
-  };
-
-  const getApiKey = () => {
-    return localStorage.getItem('gradient_api_key') || 'ITkXtkH4IGJEXvB-vO7O6Bfs1hXi8yqg';
-  };
-
-  const appendMessage = (role, text) => {
-    const wrap = document.createElement('div');
-    wrap.className = role === 'user' ? 'text-right' : 'text-left';
-    const bubble = document.createElement('div');
-    bubble.className = role === 'user'
-      ? 'inline-block bg-teal-600 text-white px-3 py-2 rounded-xl max-w-[85%]'
-      : 'inline-block bg-gray-100 text-gray-900 px-3 py-2 rounded-xl max-w-[85%]';
-    bubble.textContent = text;
-    wrap.appendChild(bubble);
-    messages.appendChild(wrap);
-    messages.scrollTop = messages.scrollHeight;
-  };
-
-  const appendSystem = (text) => {
-    const p = document.createElement('div');
-    p.className = 'text-[12px] text-gray-500';
-    p.textContent = text;
-    messages.appendChild(p);
-    messages.scrollTop = messages.scrollHeight;
-  };
-
-  const sendToAgent = async (userText) => {
-    const apiKey = getApiKey();
-    const headers = { 'Accept': 'application/json, text/plain;q=0.9' };
-    if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
-
-    try {
-      const endpoint = resolveEndpoint();
-
-      // Try GET first since POST returns 405
-      const url = new URL(endpoint);
-      url.searchParams.set('input', userText);
-      if (apiKey) url.searchParams.set('api_key', apiKey);
-      
-      const res = await fetch(url.toString(), { 
-        method: 'GET', 
-        headers, 
-        mode: 'cors', 
-        credentials: 'omit' 
-      });
-
-      if (!res.ok) {
-        const text = await res.text();
-        throw new Error(`HTTP ${res.status}: ${text.slice(0,200)}`);
-      }
-
-      // Try JSON first, fallback to text
-      const contentType = res.headers.get('content-type') || '';
-      if (contentType.includes('application/json')) {
-        const data = await res.json();
-        const reply = data.output || data.response || data.reply || data.content || data.text || data.message || JSON.stringify(data);
-        appendMessage('assistant', reply);
-      } else {
-        const text = await res.text();
-        appendMessage('assistant', text);
-      }
-    } catch (err) {
-      appendSystem(`Error: ${err.message}`);
-    }
-  };
-
-  const handleSend = () => {
-    const txt = (input.value || '').trim();
-    if (!txt) return;
-    appendMessage('user', txt);
-    input.value = '';
-    appendSystem('Thinking...');
-    sendToAgent(txt).finally(() => {
-      // remove last system "Thinking..." message
-      const systemMessages = messages.querySelectorAll('[class*="text-gray-500"]');
-      const lastSystem = systemMessages[systemMessages.length - 1];
-      if (lastSystem && lastSystem.textContent === 'Thinking...') {
-        messages.removeChild(lastSystem);
-      }
+// Fallback chat button handler
+document.addEventListener('DOMContentLoaded', function() {
+  const fallbackChat = document.getElementById('fallbackChat');
+  if (fallbackChat) {
+    fallbackChat.addEventListener('click', function() {
+      window.open('https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run', '_blank');
     });
-  };
-
-  toggle.addEventListener('click', () => {
-    widget.classList.toggle('hidden');
-  });
-  closeBtn.addEventListener('click', () => widget.classList.add('hidden'));
-  sendBtn.addEventListener('click', handleSend);
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') handleSend();
-  });
-})();
+  }
+});
 
