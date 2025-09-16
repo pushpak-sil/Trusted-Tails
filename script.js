@@ -102,35 +102,38 @@ if (backToTopButton) {
     try {
       const endpoint = resolveEndpoint();
 
-      // Attempt 1: POST with messages (OpenAI-style)
-      let res = await fetch(endpoint, {
-        method: 'POST',
-        headers,
-        mode: 'cors',
-        credentials: 'omit',
-        body: JSON.stringify({
-          messages: [
-            { role: 'system', content: 'You are Trusted Tails assistant. Be concise and helpful.' },
-            { role: 'user', content: userText }
-          ]
-        })
-      });
-
-      // If Method Not Allowed, try GET fallback
-      if (res.status === 405) {
-        const url = new URL(endpoint);
-        url.searchParams.set('q', userText);
-        res = await fetch(url.toString(), { method: 'GET', headers: { 'Accept': 'application/json, text/plain;q=0.9' }, mode: 'cors', credentials: 'omit' });
-      }
-
-      // If Bad Request, try POST with {input}
-      if (!res.ok && res.status === 400) {
+      // Try different API formats based on common Gradient AI patterns
+      let res;
+      
+      // Attempt 1: POST with {input} (most common for Gradient AI)
+      try {
         res = await fetch(endpoint, {
           method: 'POST',
           headers,
           mode: 'cors',
           credentials: 'omit',
           body: JSON.stringify({ input: userText })
+        });
+      } catch (e) {
+        // Attempt 2: POST with {message}
+        res = await fetch(endpoint, {
+          method: 'POST',
+          headers,
+          mode: 'cors',
+          credentials: 'omit',
+          body: JSON.stringify({ message: userText })
+        });
+      }
+
+      // If Method Not Allowed, try GET fallback
+      if (res.status === 405) {
+        const url = new URL(endpoint);
+        url.searchParams.set('input', userText);
+        res = await fetch(url.toString(), { 
+          method: 'GET', 
+          headers: { 'Accept': 'application/json, text/plain;q=0.9' }, 
+          mode: 'cors', 
+          credentials: 'omit' 
         });
       }
 
@@ -143,7 +146,7 @@ if (backToTopButton) {
       const contentType = res.headers.get('content-type') || '';
       if (contentType.includes('application/json')) {
         const data = await res.json();
-        const reply = data.reply || data.output || data.content || data.text || (data.choices && data.choices[0] && (data.choices[0].message?.content || data.choices[0].text)) || JSON.stringify(data);
+        const reply = data.output || data.response || data.reply || data.content || data.text || data.message || JSON.stringify(data);
         appendMessage('assistant', reply);
       } else {
         const text = await res.text();
