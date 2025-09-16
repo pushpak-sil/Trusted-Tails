@@ -56,9 +56,9 @@ if (backToTopButton) {
   });
 }
 
-// Check if Gradient AI widget loaded and hide fallback if it did
+// Chat button handler - opens chatbot in popup window
 document.addEventListener('DOMContentLoaded', function() {
-  const fallbackChat = document.getElementById('fallbackChat');
+  const chatButton = document.getElementById('chatButton');
   
   // Check if the official widget loaded after a delay
   setTimeout(() => {
@@ -67,25 +67,26 @@ document.addEventListener('DOMContentLoaded', function() {
                           document.querySelector('[class*="chatbot"]');
     
     if (gradientWidget) {
-      console.log('Gradient AI widget detected, hiding fallback button');
-      if (fallbackChat) fallbackChat.style.display = 'none';
+      console.log('Gradient AI widget detected, hiding chat button');
+      if (chatButton) chatButton.style.display = 'none';
     } else {
-      console.log('Gradient AI widget not detected, keeping fallback button');
+      console.log('Gradient AI widget not detected, keeping chat button');
     }
   }, 3000); // Wait 3 seconds for widget to load
   
-  if (fallbackChat) {
-    fallbackChat.addEventListener('click', function() {
-      // Try different possible chatbot URLs
-      const possibleUrls = [
+  if (chatButton) {
+    chatButton.addEventListener('click', function() {
+      // Open chatbot in a popup window instead of new tab
+      const popup = window.open(
         'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run/chat',
-        'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run/agent',
-        'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run/widget',
-        'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run'
-      ];
+        'chatbot',
+        'width=400,height=600,scrollbars=yes,resizable=yes,menubar=no,toolbar=no,location=no,status=no'
+      );
       
-      // Open the first URL (most likely to be the chat interface)
-      window.open(possibleUrls[0], '_blank');
+      // Focus the popup window
+      if (popup) {
+        popup.focus();
+      }
     });
   }
 });
