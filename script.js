@@ -69,8 +69,12 @@ if (backToTopButton) {
   const resolveEndpoint = () => {
     return (
       localStorage.getItem('gradient_endpoint') ||
-      'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run/chat'
+      'https://ijpyvk7ggnzqoes2yww2nixu.agents.do-ai.run'
     );
+  };
+
+  const getApiKey = () => {
+    return localStorage.getItem('gradient_api_key') || 'ITkXtkH4IGJEXvB-vO7O6Bfs1hXi8yqg';
   };
 
   const appendMessage = (role, text) => {
@@ -95,47 +99,24 @@ if (backToTopButton) {
   };
 
   const sendToAgent = async (userText) => {
-    const apiKey = localStorage.getItem('gradient_api_key');
-    const headers = { 'Content-Type': 'application/json', 'Accept': 'application/json, text/plain;q=0.9' };
+    const apiKey = getApiKey();
+    const headers = { 'Accept': 'application/json, text/plain;q=0.9' };
     if (apiKey) headers['Authorization'] = `Bearer ${apiKey}`;
 
     try {
       const endpoint = resolveEndpoint();
 
-      // Try different API formats based on common Gradient AI patterns
-      let res;
+      // Try GET first since POST returns 405
+      const url = new URL(endpoint);
+      url.searchParams.set('input', userText);
+      if (apiKey) url.searchParams.set('api_key', apiKey);
       
-      // Attempt 1: POST with {input} (most common for Gradient AI)
-      try {
-        res = await fetch(endpoint, {
-          method: 'POST',
-          headers,
-          mode: 'cors',
-          credentials: 'omit',
-          body: JSON.stringify({ input: userText })
-        });
-      } catch (e) {
-        // Attempt 2: POST with {message}
-        res = await fetch(endpoint, {
-          method: 'POST',
-          headers,
-          mode: 'cors',
-          credentials: 'omit',
-          body: JSON.stringify({ message: userText })
-        });
-      }
-
-      // If Method Not Allowed, try GET fallback
-      if (res.status === 405) {
-        const url = new URL(endpoint);
-        url.searchParams.set('input', userText);
-        res = await fetch(url.toString(), { 
-          method: 'GET', 
-          headers: { 'Accept': 'application/json, text/plain;q=0.9' }, 
-          mode: 'cors', 
-          credentials: 'omit' 
-        });
-      }
+      const res = await fetch(url.toString(), { 
+        method: 'GET', 
+        headers, 
+        mode: 'cors', 
+        credentials: 'omit' 
+      });
 
       if (!res.ok) {
         const text = await res.text();
@@ -164,9 +145,12 @@ if (backToTopButton) {
     input.value = '';
     appendSystem('Thinking...');
     sendToAgent(txt).finally(() => {
-      // remove last system "Thinking..."
-      const last = messages.querySelector('.text-[12px]:last-child');
-      if (last && last.textContent === 'Thinking...') messages.removeChild(last);
+      // remove last system "Thinking..." message
+      const systemMessages = messages.querySelectorAll('[class*="text-gray-500"]');
+      const lastSystem = systemMessages[systemMessages.length - 1];
+      if (lastSystem && lastSystem.textContent === 'Thinking...') {
+        messages.removeChild(lastSystem);
+      }
     });
   };
 
