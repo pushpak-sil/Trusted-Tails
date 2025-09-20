@@ -242,13 +242,46 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-// Mobile menu toggle (if needed in future)
-function toggleMobileMenu() {
-  const nav = document.querySelector('nav');
-  if (nav) {
-    nav.classList.toggle('mobile-open');
+// Mobile menu toggle functionality
+document.addEventListener('DOMContentLoaded', function() {
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuBtn && mobileMenu) {
+    mobileMenuBtn.addEventListener('click', function() {
+      mobileMenu.classList.toggle('hidden');
+      
+      // Update button icon
+      const icon = mobileMenuBtn.querySelector('svg');
+      if (mobileMenu.classList.contains('hidden')) {
+        // Show hamburger icon
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+      } else {
+        // Show close icon
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>';
+      }
+    });
+    
+    // Close mobile menu when clicking on a link
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function() {
+        mobileMenu.classList.add('hidden');
+        const icon = mobileMenuBtn.querySelector('svg');
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+      });
+    });
+    
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', function(event) {
+      if (!mobileMenuBtn.contains(event.target) && !mobileMenu.contains(event.target)) {
+        mobileMenu.classList.add('hidden');
+        const icon = mobileMenuBtn.querySelector('svg');
+        icon.innerHTML = '<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>';
+      }
+    });
   }
-}
+});
 
 // Lazy loading for images
 document.addEventListener('DOMContentLoaded', function() {

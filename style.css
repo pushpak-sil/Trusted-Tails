@@ -102,6 +102,34 @@ button:hover, .btn:hover {
   .container {
     padding: 0 1rem;
   }
+  
+  /* Improve touch targets for mobile */
+  button, a, input, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Better mobile spacing */
+  .mobile-spacing {
+    padding: 1rem;
+  }
+  
+  /* Mobile-optimized text sizes */
+  h1 { font-size: 1.75rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  
+  /* Mobile form improvements */
+  input, textarea {
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  /* Mobile button improvements */
+  .btn-mobile {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 0.5rem;
+  }
 }
 
 /* Print styles */
@@ -207,5 +235,47 @@ a, button, input, textarea, select {
 @media (max-width: 768px) {
   html {
     scroll-behavior: smooth;
+  }
+  
+  /* Prevent horizontal scroll */
+  body {
+    overflow-x: hidden;
+  }
+  
+  /* Mobile-specific improvements */
+  .mobile-hidden {
+    display: none;
+  }
+  
+  /* Better mobile navigation */
+  .mobile-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 50;
+  }
+}
+
+/* Small mobile devices */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+  
+  /* Even smaller text for very small screens */
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.25rem; }
+  h3 { font-size: 1.125rem; }
+  
+  /* Compact spacing */
+  .py-12 { padding-top: 2rem; padding-bottom: 2rem; }
+  .py-20 { padding-top: 3rem; padding-bottom: 3rem; }
+}
+
+/* Large mobile devices */
+@media (min-width: 481px) and (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
   }
 }
